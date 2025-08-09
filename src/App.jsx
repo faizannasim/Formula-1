@@ -1,5 +1,52 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 import Hero from './Component/Hero';
@@ -17,23 +64,28 @@ import Dashboard from './Component/Dashboard';
 function App() {
   return (
     <Router>
+      
+          <ToastContainer />
       <Routes>
         
         <Route
           path="/"
           element={
             <div>
+          
               <Hero />
               <HeroBody />
               <Drivers />
               <MainPhoto />
               <User />
               <CarHover />
+    
             </div>
           }
         />
+        
 
-
+      
         <Route path="/login" element={<Login />} />
 
       
@@ -47,3 +99,18 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

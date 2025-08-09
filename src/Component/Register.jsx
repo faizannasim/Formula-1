@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import React, { use, useState } from "react";
 import newImg from "../assets/new.png";
 import hero from "../assets/register.png";
 import { Link } from "react-router-dom";
+import "react-phone-input-2/lib/style.css";
+import ReCAPTCHA from "react-google-recaptcha";
+import TextField from "@mui/material/TextField";
 
 import {
   faEnvelope,
@@ -11,14 +15,23 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import { Phone } from "lucide-react";
+import { toast } from "react-toastify";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { auth } from "../firebase";
+import OtpInput from "./OtpInput";
 
 function Register() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const strongPasswordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
   const [error, setError] = useState({});
+  const [isPassword, setIsPassword] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  const [showOtpInput, setShowOtpInput] = useState("");
   const [form, setForm] = useState({
     username: "",
     Mobile: "",
@@ -58,27 +71,68 @@ function Register() {
     return errors;
   };
 
+  const handleCaptcha = () => {};
   const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setError(validationErrors);
-    } else {
-      localStorage.setItem("Email", form.Email);
-      setIsSubmitted(true);
-      setError({});
-      setForm({
-        username: "",
-        Mobile: "",
-        Email: "",
-        Password: "",
-        ConfirmPassword: "",
-      });
-      console.log(form);
-        navigate("/dashboard")
+      return;
     }
+    //console.log("Form Submitted:", form)
+
+    const RegisterUser = JSON.parse(localStorage.getItem("RegisterUser")) || [];
+    console.log(RegisterUser);
+
+    const isAlreadyRegister = RegisterUser.some(
+      (user) => user.Email === form.Email,
+    );
+
+    if (isAlreadyRegister) {
+      toast.error("This email is already registered. Try logging in.");
+      return;
+    }
+
+    const newUser = {// push this into reg user
+      username: form.username, 
+      Mobile: form.Mobile,
+      Email: form.Email,
+      Password: form.Password,
+      
+    };
+    console.log("Newly Registered:", newUser);
+
+
+    RegisterUser.push(newUser);
+    console.log("Updated User List:", RegisterUser);
+
+    localStorage.setItem("RegisterUser", JSON.stringify(RegisterUser));
+
+    localStorage.setItem("Email", form.Email);
+    localStorage.setItem("isLoggedIn", "true");
+
+    setIsSubmitted(true);
+    setError({});
+    setForm({
+      username: "",
+      Mobile: "",
+      Email: "",
+      Password: "",
+      ConfirmPassword: "",
+    });
+
+    toast.success("Registered Successfully!");
+    navigate("/Login");
   };
 
+  const handlePhoneNumber = (value) => {
+    setForm({ ...form, Mobile: value });
+    setPhone(value);
+  };
+  const onOtpSubmit = (otp)=>{
+    console.log("login",otp)
+
+  }
   return (
     <div
       className="flex justify-center min-h-screen"
@@ -132,26 +186,34 @@ function Register() {
 
           <div>
             <label
-              className="text-black font-bold mb-2"
+              className="font-bold mb-2 text-black"
               style={{ fontFamily: "fantasy" }}
             >
-              Mobile
+              Phone
             </label>
+
             <div className="relative">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                <FontAwesomeIcon icon={faPhone} />
-              </span>
-              <input
-                type="text"
-                name="Mobile"
-                value={form.Mobile}
-                placeholder="Enter Your Mobile Number"
-                onChange={(e) => setForm({ ...form, Mobile: e.target.value })}
-                className="w-full h-10 pr-4 py-2 pl-10 border-2 focus:ring-2 outline-none focus:ring-gray-500 transition rounded"
-              />
+              {!showOtpInput ? (
+                <PhoneInput
+                  country={"in"}
+                  onChange={handlePhoneNumber}
+                  value={form.Mobile}
+                  placeholder="Enter your mobile number"
+                  inputClass="!w-full !h-10 !pr-4 !py-2 !pl-10 !border-2 !focus:ring-2 !outline-none !focus:ring-gray-500 !transition !rounded !bg-white/10 !border-black"
+                  buttonClass="!bg-transparent !hover:bg-transparent !border-none"
+                  containerClass="!w-full"
+                />
+              ) : (
+                <div>
+                  <p>Enter OTP sent to {form.Mobile}</p>
+                  <OtpInput length={6} onOtpSubmit={onOtpSubmit}></OtpInput>
+                </div>
+              )}
             </div>
             {error.Mobile && (
-              <p className="text-red-600 text-sm mt-1">{error.Mobile}</p>
+              <p className="text-red-600 text-sm mt-1 min-h-[1.2rem]">
+                {error.Mobile}
+              </p>
             )}
           </div>
 
@@ -191,12 +253,20 @@ function Register() {
                 <FontAwesomeIcon icon={faLock} />
               </span>
               <input
-                type="text"
+                type={isPassword ? "password" : "text"}
                 value={form.Password}
                 onChange={(e) => setForm({ ...form, Password: e.target.value })}
+                autoComplete="current-password"
                 placeholder="Enter Your Password"
                 className="w-full h-10 pr-4 py-2 pl-10 border-2 focus:ring-2 outline-none focus:ring-gray-500 transition rounded"
               />
+              <span
+                className="button absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setIsPassword(!isPassword)}
+              >
+                {" "}
+                👁️{" "}
+              </span>
             </div>
             {error.Password && (
               <p className="text-red-600 text-sm mt-1">{error.Password}</p>
@@ -215,7 +285,7 @@ function Register() {
                 <FontAwesomeIcon icon={faLock} />
               </span>
               <input
-                type="text"
+                type={isPassword ? "password" : "text"}
                 value={form.ConfirmPassword}
                 onChange={(e) =>
                   setForm({ ...form, ConfirmPassword: e.target.value })
@@ -223,6 +293,13 @@ function Register() {
                 placeholder="Enter Your Confirm Password"
                 className="w-full h-10 pr-4 py-2 pl-10 border-2 focus:ring-2 outline-none focus:ring-gray-500 transition rounded"
               />
+              <span
+                className="button absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setIsPassword(!isPassword)}
+              >
+                {" "}
+                👁️{" "}
+              </span>
             </div>
             {error.ConfirmPassword && (
               <p className="text-red-600 text-sm mt-1">
@@ -230,15 +307,22 @@ function Register() {
               </p>
             )}
           </div>
+          <div id="recaptcha"></div>
 
-          <button className="btn btn-danger absolute bottom-44" type="submit">
-            Submit
+          <button className="btn btn-danger mt-4 w-full" type="submit">
+            Send OTP
           </button>
 
-          <p className="absolute bottom-28 text-black" style={{ fontFamily: "fantasy" }}>
-  Already have an account? <Link to="/login">Log in</Link>
-</p>
+          <button className="btn btn-danger mt-4 w-full" type="submit">
+            verify OTP
+          </button>
 
+          <p
+            className="mt-4 text-black text-center"
+            style={{ fontFamily: "fantasy" }}
+          >
+            Already have an account? <Link to="/login">Log in</Link>
+          </p>
         </form>
       </div>
     </div>

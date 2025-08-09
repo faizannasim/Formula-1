@@ -2,14 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-        tailwindcss(
-          
-        ),
+    tailwindcss(),
+    react()
+  ],
 
-    react()]
-  ,
+  assetsInclude: ['**/*.ani']  // 👉 This line tells Vite to treat .ani as static asset
 })

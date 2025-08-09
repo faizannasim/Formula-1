@@ -3,9 +3,13 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import newImg from "../assets/hh.jpg";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { UAParser } from "ua-parser-js";
+import { User } from "lucide-react";
 
 function Login() {
   const navigate = useNavigate();
+  const [isPassword, setIsPassword] = useState(true)
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,21 +32,65 @@ function Login() {
     return errors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setError(validationErrors);
-    } else {
-      localStorage.setItem("Email", data.Email);
-      setIsSubmitted(true);
-      setError({});
-      setData({ Email: "", Password: "" });
-      console.log("Form Submitted", data);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setError(validationErrors);
+    return;
+  }
 
-      navigate("/dashboard");
-    }
-  };
+  const RegisterUser = JSON.parse(localStorage.getItem("RegisterUser")) || [];
+
+  const MatchUser = RegisterUser.find(
+    (user) =>
+      user.Email === data.Email && user.Password === data.Password
+  );
+
+  if (!MatchUser) {
+    toast.error("Invalid Email or Password");
+    return
+    
+  } 
+
+  try {
+    const res = await fetch("https://ipinfo.io/json?token=02be15483e6676");
+    const ipData = await res.json();
+
+    const parser = new UAParser();
+    const result = parser.getResult();
+
+    const loginInfo = {
+      ip: ipData.ip,
+      city: ipData.city,
+      region: ipData.region,
+      country: ipData.country,
+      browser: result.browser.name,
+      os: result.os.name,
+      device: result.device.type || "Desktop",
+      time: new Date().toLocaleString(),
+    };
+
+    const prevLogins =  JSON.parse(localStorage.getItem("LoginHistory")) || [];
+    
+
+    prevLogins.push(loginInfo);
+    localStorage.setItem("LoginHistory", JSON.stringify(prevLogins));
+
+    localStorage.setItem("Email", data.Email);
+    localStorage.setItem("isLoggedIn","true") 
+
+    setIsSubmitted(true);
+    setError({});
+    setData({ Email: "", Password: "" });
+
+    toast.success("Login Successful!");
+    navigate("/dashboard");
+  } catch (err) {
+    console.error("Error in login tracking:", err);
+    toast.error("Error in login tracking");
+  }
+};
 
   return (
     <div
@@ -59,7 +107,7 @@ function Login() {
           className="text-2xl font-bold mb-2"
           style={{ fontFamily: "fantasy" }}
         >
-          "Welcome Back!"
+          "Welcome Back
         </h2>
         <p
           className="text-center italic text-[30px] font-bold"
@@ -84,7 +132,7 @@ function Login() {
             >
               Email
             </label>
-            <div className="relative">
+            <div className="relative ">
               <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <FontAwesomeIcon icon={faEnvelope} />
               </span>
@@ -97,11 +145,13 @@ function Login() {
                 className="w-full border h-10 border-gray-500 rounded-md  text-white pl-10 pr-4 py-2 focus:ring-2  focus:ring-blue-500 focus:outline-none transition"
                 style={{ fontFamily: "fantasy" }}
               />
+
             </div>
             {error.Email && (
               <p className="text-red-600 text-sm mt-1">{error.Email}</p>
             )}
           </div>
+
           <div>
             <label
               className="block  mb-1 font-bold text-white"
@@ -114,14 +164,15 @@ function Login() {
                 <FontAwesomeIcon icon={faLock} />
               </span>
               <input
-                type="text"
-                name="Password"
+                type={isPassword ? "password" : "text"}
+                name="password"
                 value={data.Password}
                 onChange={(e) => setData({ ...data, Password: e.target.value })}
                 placeholder="Enter your Password"
                 className="w-full border h-10 border-gray-500 pl-10 pr-4 py-2  text-white rounded-md focus:ring-2  focus:ring-blue-500 focus:outline-none transition"
                 style={{ fontFamily: "fantasy" }}
               />
+              <span className="button absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer" onClick={() => setIsPassword(!isPassword)}> 👁️ </span>
             </div>
             {error.Password && (
               <p className="text-red-600 text-sm mt-1">{error.Password}</p>
@@ -164,4 +215,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Login
