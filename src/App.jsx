@@ -10,10 +10,10 @@ import Drivers from "./Component/Drivers";
 import MainPhoto from "./Component/MainPhoto";
 import User from "./Component/User";
 import CarHover from "./Component/CarHover";
-import Login from "./Component/Login";      // ✅ Corrected
+import Login from "./Component/Login";      
 import Register from "./Component/Register";
 
-import DashBoard from "./Component/Dashboard";
+import DashBoard from "./Component/DashBoard";
 import Footer from "./Component/Footer";
 import OurPartners from "./Component/OurPartners";
 
