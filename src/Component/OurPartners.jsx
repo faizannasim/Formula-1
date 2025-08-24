@@ -1,31 +1,37 @@
 // OurPartners.jsx
 import React from "react";
+import alpha from "../assets/alpha.png"
+import fer from "../assets/ferrari.avif"
+import red from "../assets/red bull.png"
+import mc from "../assets/mc.png"
+import martin from "../assets/martin.avif"
+import amg from "../assets/kv-car.png"
 
 function OurPartners() {
   const partners = [
     {
       name: "Mercedes AMG",
-      img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mercedes-AMG_Petronas_F1_Team_logo.svg/1280px-Mercedes-AMG_Petronas_F1_Team_logo.svg.png",
+      img: amg,
     },
     {
       name: "Red Bull Racing",
-      img: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Oracle_Red_Bull_Racing_logo.svg/1280px-Oracle_Red_Bull_Racing_logo.svg.png",
+      img: red,
     },
     {
       name: "Ferrari",
-      img: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Scuderia_Ferrari_Logo.svg/1280px-Scuderia_Ferrari_Logo.svg.png",
+      img: fer,
     },
     {
       name: "McLaren",
-      img: "https://upload.wikimedia.org/wikipedia/en/thumb/6/68/McLaren_Racing_logo.svg/1280px-McLaren_Racing_logo.svg.png",
+      img: mc,
     },
     {
       name: "AlphaTauri",
-      img: "https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/Scuderia_AlphaTauri_logo.svg/1280px-Scuderia_AlphaTauri_logo.svg.png",
+      img: alpha,
     },
     {
       name: "Aston Martin",
-      img: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Aston_Martin_F1_Team_logo.svg/1280px-Aston_Martin_F1_Team_logo.svg.png",
+      img: martin,
     },
   ];
 
