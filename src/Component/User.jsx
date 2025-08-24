@@ -1,185 +1,64 @@
+// User.jsx
 import React from "react";
 import one from "../assets/1.avif";
 import two from "../assets/3.avif";
 import three from "../assets/5.avif";
 import four from "../assets/4.avif";
 import fifth from "../assets/7.avif";
-import six from "../assets/car bg.avif";
-import seven from "../assets/seven.jpg";
-import eight from "../assets/face.avif";
-import nine from "../assets/newws.jpg";
 
 function User() {
-  return (
-    <div className="w-full h-full bg-black flex flex-col  justify-start px-[160px] pt-10 relative overflow-hidden">
-      <div className="w-full ">
-        <div className="h-[15px] w-full bg-red-800   " />
+  const drivers = [
+    { img: one, name: "Charles Leclerc", gradient: "from-[#ff9a9e] to-[#fad0c4]" },
+    { img: two, name: "Lando Norris", gradient: "from-[#1e1e5a] to-[#d30000]" },
+    { img: three, name: "George Russell", gradient: "from-[#00352f] to-[#00ff9f]" },
+    { img: four, name: "Oscar Piastri", gradient: "from-[#1b1464] to-[#f7df1e]" },
+    { img: fifth, name: "Esteban Ocon", gradient: "from-[#434343] to-[#000000]" },
+  ];
 
-        <div className="h-[15px] w-full bg-red-800 mt-2.5 " />
-      </div>
-      <div className="mt-10  ">
+  return (
+    <div className="w-full bg-black flex flex-col items-center px-6 md:px-40 pt-12">
+      {/* Modern Heading */}
+      <div className="text-center max-w-4xl">
         <h1
-          className="text-white text-[40px]  font-bold"
-          style={{ fontFamily: "fantasy" }}
+          className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 tracking-wide"
+          style={{ fontFamily: "'Orbitron', sans-serif", lineHeight: "1.2" }}
         >
           🏎️🔥 The Best Behind the Wheel 🔥🏁
         </h1>
-      </div>
-      <div className="    grid grid-cols-2 md:grid-cols-5 gap-9 mt-10 px-4 md:px-0">
-        <div className=" relative h-[400px]  w-[260px]  overflow-hidden shadow-lg rounded-lg backdrop-opacity-25 bg-gradient-to-br from-[#ff9a9e]] to-[#fad0c4]">
-          <img
-            src={one}
-            alt="Driver "
-            className="w-full h-full object-cover object-top opacity-90 "
-          />
-          <div className="absolute inset-0 flex   items-end justify-end p-4   ">
-            <p
-              className="text-white text-[20px] font-extrabold  px-4 rounded  tracking-wide transition-all hover:underline  "
-              style={{
-                fontFamily: "'Orbitron', sans-serif",
-              }}
-            >
-              Charles Leclerc
-            </p>
-          </div>
-        </div>
-
-        <div className=" relative h-[400px] w-[260px] overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-[#1e1e5a] to [#d30000]">
-          <img
-            src={two}
-            alt="Driver 2"
-            className="w-full h-full object-cover object-top "
-          />
-
-          <div className="absolute inset-0 flex  items-end justify-end p-4">
-            <p
-              className=" text-white text-[20px]  font-extrabold px-4 rounded hover:underline tracking-wide transition-all "
-              style={{
-                fontFamily: "'Orbitron', sans-serif",
-              }}
-            >
-              Lando Norris
-            </p>
-          </div>
-        </div>
-
-        <div className=" relative h-[400px] w-[260px] overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-[#00352f] to-[#00ff9f]">
-          <img
-            src={three}
-            alt="Driver 3"
-            className="w-full h-full object-cover object-top "
-          />
-          <div className="absolute inset-0 flex  items-end justify-end p-4">
-            <p
-              className=" text-white text-[20px]  font-extrabold px-4 rounded hover:underline tracking-wide transition-all antialiased"
-              style={{
-                fontFamily: "'Orbitron', sans-serif",
-              }}
-            >
-              George Russell
-            </p>
-          </div>
-        </div>
-
-        <div
-          className=" relative h-[400px] w-[260px] overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-[#1b1464] to-[#f7df1e]"
-          style={{
-            fontFamily: "'Orbitron', sans-serif",
-          }}
-        >
-          <img
-            src={four}
-            alt="Driver 4"
-            className="w-full h-full object-cover object-top  "
-          />
-          <div className="absolute inset-0 flex items-end justify-end p-4">
-            <p
-              className="text-white text-[20px]  font-extrabold px-4  rounded hover:underline tracking-wide transition-all antialiased"
-              style={{
-                fontFamily: "'Orbitron', sans-serif",
-              }}
-            >
-              Oscar Piastri
-            </p>
-          </div>
-        </div>
-
-        <div className=" relative h-[400px] w-[260px] overflow-hidden shadow-lg rounded-lg bg-gradient-to-br from-[#434343] to-[#000000]">
-          <img
-            src={fifth}
-            alt="Driver 1"
-            className="w-full h-full object-cover object-top  "
-          />
-          <div className="absolute inset-0 flex justify-end items-end p-4">
-            <p
-              className="text-white text-[20px]  font-extrabold px-4 rounded hover:underline tracking-wide transition-all antialiased"
-              style={{
-                fontFamily: "'Orbitron', sans-serif",
-              }}
-            >
-              Esteban Ocon
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="mt-11 ml-2">
+        <div className="w-24 h-1 mx-auto bg-red-600 rounded-full mb-8 transition-all duration-500 hover:w-36" />
         <p
-          className="text-white text-[40px] font-extrabold tracking-wide"
-          style={{ fontFamily: "fantasy" }}
+          className="text-gray-300 text-base sm:text-lg md:text-xl leading-relaxed"
+          style={{ fontFamily: "'Roboto', sans-serif", lineHeight: "1.6", fontWeight: 500 }}
         >
-          🧬 ENGINEERED TO DOMINATE   🏎️🔥 
-
+          Meet the elite drivers who push the limits every race, delivering speed, precision, and passion on the track.
         </p>
       </div>
 
-      <div className="  mb-20 mt-10 relative overflow-hidden    ">
-        <img
-          src={six}
-          className=" w-3xl transition-transform ease-in-out duration-300 group-hover:scale-105 rounded ml-4 object-cover"
-        />
-        <div className="absolute bottom-0 left-0 w-full flex  ">
-          <a href=""
-            className="font-bold text-white text-[25px]   transition-all duration-300 group-hover:underline ml-20 mb-5"
-            style={{ fontFamily: "'fantasy" }}
+      {/* Driver Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-12 w-full max-w-7xl">
+        {drivers.map((driver, i) => (
+          <div
+            key={i}
+            className={`relative h-[400px] w-full rounded-xl shadow-lg bg-gradient-to-br ${driver.gradient} overflow-hidden transition-transform duration-300 hover:scale-105`}
           >
-            LIVE COVERAGE: Second practice for the British GP
-          </a>
-        </div>
-        <div>
-          <div className="absolute top-0 right-4 flex items-center space-x-2   ">
-            <a href="" className="flex items-center space-x-4 text-white  w-[640px] font-bold bg-gray-900 p-2 gap-2 rounded group hover:underline" style={{fontFamily:"fantasy"}}>
-              <img src={seven} className="h-20 w-20 rounded   transition-all duration-300 group-hover:scale-110 " />
-             🧱 LEGO trophies awarded to top 3 at Silverstone podium.
-            </a >
+            <img
+              src={driver.img}
+              alt={driver.name}
+              className="w-full h-full object-cover object-top opacity-95"
+            />
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center p-2">
+              <p
+                className="text-white text-base sm:text-sm md:text-base lg:text-lg font-bold bg-black/50 px-3 py-1 rounded tracking-wide hover:underline transition-all"
+                style={{ fontFamily: "'Orbitron', sans-serif" }}
+              >
+                {driver.name}
+              </p>
+            </div>
           </div>
-          <div className="absolute top-28 right-4 flex items-center space-x-2 ">
-            <a href="" className="flex items-center space-x-4 text-white  w-[640px] font-bold bg-gray-900 p-2 gap-2 rounded group hover:underline" style={{fontFamily:"fantasy"}}>
-              <img src={eight} className="h-20 w-20 rounded transition-all duration-300 group-hover:scale-110 " />
-              🏁 Verstappen takes pole at Silverstone for the British GP.
-            </a>
-          </div>
-          <div className="absolute top-56 right-4 flex items-center space-x-2 ">
-            <a href="" className="flex items-center space-x-4 text-white w-[640px] font-bold bg-gray-900 p-2 gap-2 rounded group hover:underline" style={{fontFamily:"fantasy"}}>
-              <img src={nine} className="h-20 w-20 rounded transition-all duration-300 group-hover:scale-110 " /> 
-                🏆 Hülkenberg gets first-ever podium after 239 races!
-
-            </a>
-          </div>
-          <div className="absolute top-86 right-4 flex items-center space-x-2 ">
-            <a href="" className="flex items-center space-x-4 text-white  w-[640px] font-bold bg-gray-900 p-2 gap-2 rounded group hover:underline" style={{fontFamily:"fantasy"}}>
-              <img src={seven} className="h-20 w-20 rounded transition-all duration-300 group-hover:scale-110 " />
-             🌧️ Rain shakes up strategy mid-race at Silverstone.
-            </a>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
 
 export default User;
-
-
-
-
-

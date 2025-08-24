@@ -273,8 +273,7 @@ function DashBoard() {
           </h1>
 
           <p className="text-gray-400 text-base flex items-center gap-2 mr-[400px] mt-11">
-            <span>Ready to dominate the track?</span>
-            <span className="text-2xl">🏎️</span>
+         
           </p>
 
           <button
