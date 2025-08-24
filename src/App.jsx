@@ -12,7 +12,7 @@ import User from "./components/User";
 import CarHover from "./components/CarHover";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
+import DashBoard from "./Component/Dashboard";
 import Footer from "./components/Footer";
 import OurPartners from "./components/OurPartners";
 import Preloader from "./components/Preloader";
