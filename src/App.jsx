@@ -4,18 +4,18 @@ import { ToastContainer } from "react-toastify";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import Hero from "./Component/Hero";
-import HeroBody from "./Component/HeroBody";
-import Drivers from "./Component/Drivers";
-import MainPhoto from "./Component/MainPhoto";
-import User from "./Component/User";
-import CarHover from "./Component/CarHover";
-import Login from "./Component/Login";
-import Register from "./Component/Register";
-import Dashboard from "./Component/Dashboard";
-import Footer from "./Component/Footer";
-import OurPartners from "./Component/OurPartners";
-import Preloader from "./Component/Preloader";
+import Hero from "./components/Hero";
+import HeroBody from "./components/HeroBody";
+import Drivers from "./components/Drivers";
+import MainPhoto from "./components/MainPhoto";
+import User from "./components/User";
+import CarHover from "./components/CarHover";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
+import Footer from "./components/Footer";
+import OurPartners from "./components/OurPartners";
+import Preloader from "./components/Preloader";
 
 function App() {
   const [loading, setLoading] = useState(
