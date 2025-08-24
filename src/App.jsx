@@ -12,30 +12,16 @@ import User from "./Component/User";
 import CarHover from "./Component/CarHover";
 import Login from "./Component/Login";      // ✅ Corrected
 import Register from "./Component/Register";
-import Dashboard from "./Component/Dashboard"; // ✅ fixed casing
+
+import DashBoard from "./Component/Dashboard";
 import Footer from "./Component/Footer";
 import OurPartners from "./Component/OurPartners";
-import Preloader from "./Component/Preloader";
+
 
 function App() {
-  const [loading, setLoading] = useState(
-    !sessionStorage.getItem("animationPlayed") // sirf first load pe dikhana
-  );
+  
 
-  useEffect(() => {
-    if (loading) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-        sessionStorage.setItem("animationPlayed", "true"); // mark as played
-      }, 3000); // loader time 3s
-      return () => clearTimeout(timer);
-    }
-  }, [loading]);
-
-  if (loading) {
-    return <Preloader />; // jab tak loader chal raha hai
-  }
-
+  
   return (
     <Router>
       <ToastContainer />
@@ -57,7 +43,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<DashBoard />} />
       </Routes>
     </Router>
   );
